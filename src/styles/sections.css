@@ -173,8 +173,14 @@
 }
 
 .events-grid {
-  @apply flex;
+  @apply grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-32);
+}
+
+.events-empty {
+  padding-block: var(--space-40);
+  text-align: center;
 }
 
 /* FAQ */
@@ -415,7 +421,7 @@
   }
 
   .events-grid {
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .footer-main-row {

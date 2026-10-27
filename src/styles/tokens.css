@@ -18,9 +18,12 @@
   --color-text-on-dark: #ffffff;
   --color-text-on-dark-muted: rgba(255, 255, 255, 0.8);
   --color-brand-primary: #e50695;
+  --color-bg-selected: #f6f4f0;
+  --color-text-disabled: #d4d1d3;
   --color-border: #eadee5;
   --color-border-input: #e5d7dc;
   --color-border-divider: #e5e7eb;
+  --shadow-dropdown: 0 0.25rem 1rem 0 rgba(30, 27, 29, 0.08);
   --shadow-card: 0 0.25rem 1rem 0 rgba(30, 27, 29, 0.03);
   --gradient-hero-overlay: linear-gradient(
     94.4deg,
@@ -59,6 +62,7 @@
   --tracking-lg: -0.03125rem;
   --tracking-label: 0.03125rem;
   --tracking-wide: 0.0625rem;
+  --tracking-filter: 0.125rem;
 
   /* Spacing */
   --space-2: 0.125rem;
@@ -100,12 +104,18 @@
   --newsletter-form-width: 26.25rem;
   --newsletter-form-height: 3.25rem;
   --event-banner-height: 20rem;
+  --event-card-lift: 4rem;
+  --event-actions-bottom: 1.25rem;
   --icon-box-size: 3rem;
   --icon-size-md: 1.5rem;
   --icon-size-sm: 1rem;
   --accent-line-width-lg: 3rem;
   --accent-line-width-sm: 2.5rem;
   --accent-line-height: 0.125rem;
+  --dropdown-min-width: 100%;
+  --datetime-panel-width: 28.5rem;
+  --calendar-cell-size: 3rem;
+  --time-list-max-height: 15rem;
   --checkbox-size: 1.125rem;
   --logo-offset-left: 10rem;
 
