@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-primary);
+  --color-brand: var(--color-brand-primary);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.page-wrapper {
+  @apply flex flex-1 flex-col;
+  overflow-x: clip;
+}
+
+.main-wrapper {
+  @apply flex flex-col;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-desktop);
+}
+
+.section-header {
+  @apply flex flex-col;
+  gap: var(--space-12);
+}
+
+.section-accent {
+  width: var(--accent-line-width-lg);
+  height: var(--accent-line-height);
+  background: var(--color-brand-primary);
+}
+
+.section-accent-sm {
+  width: var(--accent-line-width-sm);
+}
+
+@media (max-width: 61.9375rem) {
+  .container {
+    padding-inline: var(--container-padding-tablet);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .container {
+    padding-inline: var(--container-padding-mobile);
+  }
+}
