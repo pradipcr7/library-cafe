@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { asset } from "@/lib/asset";
 
 const navLeft = ["WHAT'S ON", "FOUNDER'S VISION", "PARTNERS"];
@@ -9,6 +10,15 @@ const navRight = ["VENUE DETAILS", "HIRE A VENUE", "FRIENDS OF NMACC"];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
   return (
     <header className="site-header">
@@ -20,9 +30,9 @@ export default function Header() {
             </a>
           ))}
         </nav>
-        <a href="#" className="header-logo" aria-label="Nita Mukesh Ambani Cultural Centre">
+        <Link href="/" className="header-logo" aria-label="Nita Mukesh Ambani Cultural Centre - Home" onClick={() => setMenuOpen(false)}>
           <Image src={asset("/assets/images/shared/logo.svg")} alt="NMACC" width={195} height={53} priority />
-        </a>
+        </Link>
         <div className="header-actions">
           <nav className="header-nav" aria-label="Secondary">
             {navRight.map((label) => (
@@ -36,19 +46,22 @@ export default function Header() {
           </button>
           <button
             type="button"
-            className="mobile-menu-button"
+            className={menuOpen ? "mobile-menu-button mobile-menu-button-open" : "mobile-menu-button"}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen((open) => !open)}
           >
-            {menuOpen ? "CLOSE" : "MENU"}
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
           </button>
         </div>
       </div>
       {menuOpen && (
         <nav id="mobile-menu" className="mobile-menu" aria-label="Mobile">
           {[...navLeft, ...navRight].map((label) => (
-            <a key={label} href="#" className="header-nav-link">
+            <a key={label} href="#" className="header-nav-link" onClick={() => setMenuOpen(false)}>
               {label}
             </a>
           ))}

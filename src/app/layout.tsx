@@ -6,11 +6,12 @@ import "@/styles/typography.css";
 import "@/styles/globals.css";
 import "@/styles/components.css";
 import "@/styles/sections.css";
+import "@/styles/catalogue.css";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const SITE_TITLE = "Nita Mukesh Ambani Cultural Centre - Mumbai, India";

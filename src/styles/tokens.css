@@ -20,6 +20,17 @@
   --color-brand-primary: #e50695;
   --color-bg-selected: #f6f4f0;
   --color-text-disabled: #d4d1d3;
+  --color-bg-muted-light: #f9fafb;
+  --color-text-label: #4b4847;
+  --color-text-meta: #6a7380;
+  --color-checkbox-border: #666666;
+  --color-backdrop: rgba(30, 27, 29, 0.4);
+  --gradient-catalogue-hero: linear-gradient(
+    90deg,
+    rgba(10, 23, 40, 0.43) 0%,
+    rgba(10, 23, 40, 0.27) 50%,
+    rgba(10, 23, 40, 0.43) 100%
+  );
   --color-border: #eadee5;
   --color-border-input: #e5d7dc;
   --color-border-divider: #e5e7eb;
@@ -33,17 +44,25 @@
 
   /* Typography */
   --font-primary: var(--font-montserrat), Arial, Helvetica, sans-serif;
+  --font-size-3xs: 0.625rem;
   --font-size-2xs: 0.6875rem;
   --font-size-xs: 0.75rem;
   --font-size-label: 0.8125rem;
   --font-size-sm: 0.875rem;
   --font-size-md: 0.9375rem;
+  --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
+  --font-size-xl-plus: 1.3125rem;
+  --font-size-xl-sheet: 1.375rem;
   --font-size-2xl: 1.5rem;
+  --font-size-3xl-mobile: 1.875rem;
   --font-size-3xl: 2.5rem;
+  --font-size-4xl-mobile: 2rem;
   --font-size-4xl: 3rem;
+  --font-size-catalogue-title: 2.75rem;
   --font-size-hero: 4.375rem;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -57,6 +76,10 @@
   --line-height-faq: 1.75rem;
   --line-height-hero-text: 2.25rem;
   --line-height-hero: 3.75rem;
+  --line-height-catalogue-hero: 1.859375rem;
+  --line-height-label: 1.2;
+  --line-height-title: 1.25;
+  --line-height-copy: 1.55;
   --line-height-xl: 3rem;
   --tracking-hero: -0.109375rem;
   --tracking-lg: -0.03125rem;
@@ -79,10 +102,16 @@
   --space-32: 2rem;
   --space-40: 2.5rem;
   --space-46: 2.875rem;
+  --space-18: 1.125rem;
+  --space-36: 2.25rem;
+  --space-38: 2.375rem;
+  --space-44: 2.75rem;
+  --space-48: 3rem;
   --space-52: 3.25rem;
   --space-64: 4rem;
   --space-72: 4.5rem;
   --space-80: 5rem;
+  --space-70: 4.375rem;
   --space-100: 6.25rem;
 
   /* Layout */
@@ -93,6 +122,31 @@
   --header-height: 5rem;
   --header-padding-x: 1.5rem;
   --hero-height: 46.875rem;
+  --catalogue-hero-height: 38.125rem;
+  --catalogue-hero-height-mobile: 28.125rem;
+  --catalogue-hero-copy-max: 49.375rem;
+  --catalogue-sidebar-width: 15.625rem;
+  --catalogue-col-title: 20.9375rem;
+  --catalogue-col-price: 9.0625rem;
+  --catalogue-field-height: 3.625rem;
+  --control-height: 2.75rem;
+  --control-height-sheet: 3rem;
+  --checkbox-size-md: 1.25rem;
+  --option-height-sm: 2.375rem;
+  --option-height-md: 2.75rem;
+  --dropdown-option-height: 2.25rem;
+  --banner-actions-width: 13.125rem;
+  --sheet-radius: 1.25rem;
+  --sheet-handle-width: 2.5rem;
+  --sheet-handle-height: 0.25rem;
+  --popup-width: 20rem;
+  --promo-heading-max: 36rem;
+  --promo-aside-width: 23rem;
+  --filter-genres-height: 31.6875rem;
+  --sort-menu-min-width: 8.3125rem;
+  --record-price-height: 3.9375rem;
+  --catalogue-download-width-mobile: 10.25rem;
+  --sheet-max-height: 90vh;
   --hero-height-mobile: 26.25rem;
   --hero-description-max: 42.75rem;
   --about-copy-max: 47.875rem;
@@ -118,12 +172,16 @@
   --time-list-max-height: 15rem;
   --checkbox-size: 1.125rem;
   --logo-offset-left: 10rem;
+  --hamburger-width: 1.75rem;
+  --hamburger-line-height: 0.09375rem;
+  --hamburger-gap: 0.4375rem;
 
   /* Radius */
   --radius-xs: 0.125rem;
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
+  --radius-xs-plus: 0.125rem;
   --radius-pill: 62.4375rem;
 
   /* Buttons */
