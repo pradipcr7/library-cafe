@@ -19,7 +19,13 @@ export default function NewsletterSection() {
             />
             <button type="submit" className="newsletter-submit">
               Sign Up
-              <Image src={asset("/assets/icons/signup-line.svg")} alt="" width={32} height={3} />
+            <Image
+              className="newsletter-submit-line"
+              src={asset("/assets/icons/signup-line.svg")}
+              alt=""
+              width={32}
+              height={3}
+            />
             </button>
           </form>
         </div>

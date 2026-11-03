@@ -1,4 +1,5 @@
 import Image from "next/image";
+import NewsletterSection from "@/components/sections/NewsletterSection";
 import { asset } from "@/lib/asset";
 
 const socials = [
@@ -11,6 +12,7 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="site-footer">
+      <NewsletterSection />
       <div className="container footer-container">
         <div className="footer-main-row">
           <p>© Copyright Nita Mukesh Ambani Cultural Centre 2026</p>
@@ -24,7 +26,7 @@ export default function Footer() {
           <div className="footer-social">
             {socials.map((s) => (
               <a key={s.name} href="#" aria-label={s.name}>
-                <Image src={s.src} alt="" width={s.size} height={s.size} />
+              <Image className="footer-social-icon" src={s.src} alt="" width={s.size} height={s.size} />
               </a>
             ))}
           </div>
