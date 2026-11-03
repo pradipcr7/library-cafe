@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import CatalogueBrowser from "@/components/sections/CatalogueBrowser";
 import CatalogueHero from "@/components/sections/CatalogueHero";
@@ -17,6 +18,7 @@ export default function LibraryPage() {
         <CatalogueHero />
         <CatalogueBrowser />
       </main>
+      <Footer />
     </div>
   );
 }
