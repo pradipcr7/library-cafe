@@ -125,7 +125,7 @@ export default function CatalogueFilters({
           value={filters.authorQuery}
           onChange={(event) => onChange({ ...filters, authorQuery: event.target.value })}
         />
-        <div className="filter-author-options">
+        <div className="filter-checkbox-options">
           {visibleAuthors.map((author) => (
             <CheckboxOption
               key={author}
@@ -162,14 +162,16 @@ export default function CatalogueFilters({
 
       <section className="filter-group">
         <h4 className="filter-group-title">Publisher</h4>
-        {publisherOptions.map((publisher) => (
-          <CheckboxOption
-            key={publisher}
-            label={publisher}
-            checked={filters.publishers.includes(publisher)}
-            onChange={() => onChange({ ...filters, publishers: toggle(filters.publishers, publisher) })}
-          />
-        ))}
+        <div className="filter-checkbox-options">
+          {publisherOptions.map((publisher) => (
+            <CheckboxOption
+              key={publisher}
+              label={publisher}
+              checked={filters.publishers.includes(publisher)}
+              onChange={() => onChange({ ...filters, publishers: toggle(filters.publishers, publisher) })}
+            />
+          ))}
+        </div>
       </section>
     </div>
   );
