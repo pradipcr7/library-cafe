@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   authorOptions,
-  bindingOptions,
   genreOptions,
   languageOptions,
   publisherOptions,
@@ -11,7 +12,6 @@ import SelectMenu from "@/components/ui/SelectMenu";
 
 export type CatalogueFilterState = {
   genres: string[];
-  /** True once the user ticks "All"; it shows unchecked until then, as designed. */
   allGenres: boolean;
   authors: string[];
   authorQuery: string;
@@ -59,9 +59,13 @@ export default function CatalogueFilters({
   onChange: (next: CatalogueFilterState) => void;
   onClear: () => void;
 }) {
+  const [genresExpanded, setGenresExpanded] = useState(false);
+  const [authorsExpanded, setAuthorsExpanded] = useState(false);
   const authorQuery = filters.authorQuery.trim().toLowerCase();
-  const visibleAuthors = authorOptions.filter((author) => author.toLowerCase().includes(authorQuery));
-  const languageValue = filters.language ?? languageOptions[0];
+  const matchingAuthors = authorOptions.filter((author) => author.toLowerCase().includes(authorQuery));
+  const visibleAuthors = authorsExpanded ? matchingAuthors : matchingAuthors.slice(0, 10);
+  const visibleGenres = genresExpanded ? genreOptions.slice(1) : genreOptions.slice(1, 11);
+  const languageValue = filters.language ?? "all";
 
   return (
     <div className="catalogue-filters">
@@ -72,21 +76,43 @@ export default function CatalogueFilters({
         </button>
       </div>
 
-      <div className="filter-genres">
-        {genreOptions.map((genre) => (
+      <div className="filter-genres" style={{ minHeight: 0, height: "auto" }}>
+        <CheckboxOption
+          label="All"
+          checked={filters.allGenres}
+          onChange={() => {
+            const selectAll = !filters.allGenres;
+            onChange({
+              ...filters,
+              genres: selectAll ? genreOptions.slice(1) : [],
+              allGenres: selectAll,
+            });
+          }}
+        />
+        {visibleGenres.map((genre) => (
           <CheckboxOption
             key={genre}
             label={genre}
-            checked={genre === "All" ? filters.allGenres : filters.genres.includes(genre)}
-            onChange={() =>
-              onChange(
-                genre === "All"
-                  ? { ...filters, genres: [], allGenres: !filters.allGenres }
-                  : { ...filters, genres: toggle(filters.genres, genre), allGenres: false },
-              )
-            }
+            checked={filters.genres.includes(genre)}
+            onChange={() => {
+              const genres = toggle(filters.genres, genre);
+              onChange({
+                ...filters,
+                genres,
+                allGenres: genres.length === genreOptions.length - 1,
+              });
+            }}
           />
         ))}
+        {genreOptions.length > 11 && (
+          <button
+            type="button"
+            className="filter-chip"
+            onClick={() => setGenresExpanded((expanded) => !expanded)}
+          >
+            {genresExpanded ? "View less" : "View more"}
+          </button>
+        )}
       </div>
 
       <section className="filter-group">
@@ -99,17 +125,25 @@ export default function CatalogueFilters({
           value={filters.authorQuery}
           onChange={(event) => onChange({ ...filters, authorQuery: event.target.value })}
         />
-        {visibleAuthors.map((author) => (
-          <CheckboxOption
-            key={author}
-            label={author}
-            checked={filters.authors.includes(author)}
-            onChange={() => onChange({ ...filters, authors: toggle(filters.authors, author) })}
-          />
-        ))}
-        <button type="button" className="filter-chip">
-          View more
-        </button>
+        <div className="filter-author-options">
+          {visibleAuthors.map((author) => (
+            <CheckboxOption
+              key={author}
+              label={author}
+              checked={filters.authors.includes(author)}
+              onChange={() => onChange({ ...filters, authors: toggle(filters.authors, author) })}
+            />
+          ))}
+          {matchingAuthors.length > 10 && (
+            <button
+              type="button"
+              className="filter-chip"
+              onClick={() => setAuthorsExpanded((expanded) => !expanded)}
+            >
+              {authorsExpanded ? "View less" : "View more"}
+            </button>
+          )}
+        </div>
       </section>
 
       <section className="filter-group">
@@ -117,22 +151,13 @@ export default function CatalogueFilters({
         <SelectMenu
           variant="field"
           label="Language"
-          options={languageOptions.map((language) => ({ value: language, label: language }))}
+          options={[
+            { value: "all", label: "All languages" },
+            ...languageOptions.map((language) => ({ value: language, label: language })),
+          ]}
           value={languageValue}
-          onChange={(language) => onChange({ ...filters, language })}
+          onChange={(language) => onChange({ ...filters, language: language === "all" ? null : language })}
         />
-      </section>
-
-      <section className="filter-group">
-        <h4 className="filter-group-title">Binding / edition</h4>
-        {bindingOptions.map((binding) => (
-          <CheckboxOption
-            key={binding.label}
-            label={binding.label}
-            checked={filters.bindings.includes(binding.label)}
-            onChange={() => onChange({ ...filters, bindings: toggle(filters.bindings, binding.label) })}
-          />
-        ))}
       </section>
 
       <section className="filter-group">

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BookRecord from "@/components/ui/BookRecord";
 import CafeBanner from "@/components/ui/CafeBanner";
 import CatalogueFilters, { emptyFilters, type CatalogueFilterState } from "@/components/ui/CatalogueFilters";
@@ -10,12 +10,14 @@ import SelectMenu from "@/components/ui/SelectMenu";
 import { asset } from "@/lib/asset";
 import { bindingOptions, books, sortOptions, TOTAL_TITLES } from "@/data/books";
 
+const PAGE_SIZE = 6;
 const normalize = (text: string) => text.replace(/[’']/g, "'").toLowerCase();
 
 export default function CatalogueBrowser() {
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState<CatalogueFilterState>(emptyFilters);
   const [sort, setSort] = useState("title");
+  const [page, setPage] = useState(1);
   const [sheetOpen, setSheetOpen] = useState(false);
 
   const isFiltered =
@@ -47,14 +49,24 @@ export default function CatalogueBrowser() {
     });
 
     return [...matches].sort((a, b) => {
+      if (Boolean(a.image) !== Boolean(b.image)) return a.image ? -1 : 1;
       if (sort === "price-asc") return a.price - b.price || a.title.localeCompare(b.title);
       if (sort === "price-desc") return b.price - a.price || a.title.localeCompare(b.title);
       return a.title.localeCompare(b.title);
     });
   }, [query, filters, sort]);
 
-  const total = isFiltered ? String(visibleBooks.length) : TOTAL_TITLES;
-  const shown = isFiltered ? visibleBooks.length : books.length;
+  const pageCount = Math.max(1, Math.ceil(visibleBooks.length / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount);
+  const pageBooks = visibleBooks.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  const firstShown = visibleBooks.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const lastShown = Math.min(currentPage * PAGE_SIZE, visibleBooks.length);
+
+  useEffect(() => {
+    setPage(1);
+  }, [query, filters, sort]);
+
+  const total = isFiltered ? visibleBooks.length.toLocaleString("en-IN") : TOTAL_TITLES;
   const clearAll = () => {
     setFilters(emptyFilters);
     setQuery("");
@@ -97,7 +109,7 @@ export default function CatalogueBrowser() {
           <div className="catalogue-directory">
             <div className="catalogue-controls">
               <p className="catalogue-count">
-                Showing <strong>{shown === 0 ? "0" : `1–${shown}`}</strong> of <strong>{total}</strong>
+                Showing <strong>{visibleBooks.length === 0 ? "0" : `${firstShown}–${lastShown}`}</strong> of <strong>{total}</strong>
               </p>
               <button type="button" className="catalogue-filters-button" onClick={() => setSheetOpen(true)}>
                 <Image src={asset("/assets/icons/filters-button.svg")} alt="" width={20} height={20} />
@@ -117,8 +129,8 @@ export default function CatalogueBrowser() {
 
             {visibleBooks.length > 0 ? (
               <div className="catalogue-records">
-                {visibleBooks.map((book) => (
-                  <BookRecord key={book.title} book={book} />
+                {pageBooks.map((book) => (
+                  <BookRecord key={book.id} book={book} />
                 ))}
               </div>
             ) : (
@@ -126,7 +138,7 @@ export default function CatalogueBrowser() {
             )}
 
             <CafeBanner />
-            <Pagination />
+            <Pagination page={currentPage} pageCount={pageCount} onPageChange={setPage} />
           </div>
         </div>
       </section>

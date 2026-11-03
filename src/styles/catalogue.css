@@ -177,7 +177,6 @@
 .filter-genres {
   @apply flex flex-col;
   gap: var(--space-2);
-  min-height: var(--filter-genres-height);
 }
 
 .filter-group {
@@ -198,6 +197,20 @@
   gap: var(--space-10);
   min-height: var(--option-height-md);
   cursor: pointer;
+}
+
+.filter-author-options {
+  @apply flex flex-col;
+  gap: var(--space-2);
+}
+
+.filter-author-options .filter-option {
+  min-height: var(--option-height-sm);
+}
+
+.filter-author-options .filter-checkbox {
+  width: var(--space-18);
+  height: var(--space-18);
 }
 
 .filter-genres .filter-option,
@@ -384,7 +397,8 @@
 }
 
 .catalogue-labels {
-  @apply flex;
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 2fr) minmax(0, 1fr) var(--catalogue-col-price);
   gap: var(--space-24);
   padding-block: var(--space-14);
   background: var(--color-bg-muted-light);
@@ -394,42 +408,79 @@
 }
 
 .catalogue-label-title {
-  flex: none;
-  width: var(--catalogue-col-title);
+  grid-column: 1 / span 2;
+  min-width: 0;
 }
 
 .catalogue-label-genre {
-  flex: 1;
   min-width: 0;
 }
 
 .catalogue-label-price {
-  flex: none;
-  width: var(--catalogue-col-price);
+  min-width: 0;
 }
 
 .book-record {
-  @apply flex items-start;
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  align-items: start;
   gap: var(--space-24);
   padding-block: var(--space-20);
   border-bottom: 1px solid var(--color-border);
 }
 
 .book-record-heading {
-  @apply flex items-center;
+  @apply flex items-start;
+  width: 100%;
+  min-width: 0;
+}
+
+.book-record-content {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) var(--catalogue-col-price);
+  align-items: start;
+  gap: var(--space-24);
+  min-width: 0;
+}
+
+.book-record-cover {
   flex: none;
-  gap: var(--space-12);
-  width: var(--catalogue-col-title);
+  width: 8rem !important;
+  height: auto !important;
+  max-width: 8rem;
+  align-self: start;
+  object-fit: cover;
+  background: var(--color-bg-secondary, #f0ede8);
+}
+
+.book-record-cover-empty {
+  display: flex;
+  aspect-ratio: 2 / 3;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-muted-light);
+}
+
+.book-record-cover-empty::after {
+  width: 2rem;
+  aspect-ratio: 1;
+  content: "";
+  background: url("/assets/icons/book.svg") center / contain no-repeat;
 }
 
 .book-record-text {
   @apply flex flex-1 flex-col;
+  align-items: flex-start;
   gap: var(--space-4);
   min-width: 0;
+  text-align: left;
 }
 
 .book-record-title {
-  font-size: var(--font-size-base);
+  overflow-wrap: anywhere;
+  word-break: normal;
+  font-size: 1rem;
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-snug);
   color: var(--color-brand-primary);
@@ -442,6 +493,8 @@
 
 .book-record-meta {
   @apply flex flex-1 flex-col;
+  grid-column: 2;
+  align-self: flex-start;
   gap: var(--space-4);
   min-width: 0;
   font-size: var(--font-size-xs);
@@ -450,12 +503,20 @@
 }
 
 .book-record-price {
-  @apply flex items-center;
+  @apply flex items-start;
+  grid-column: 3;
+  align-self: flex-start;
   flex: none;
   width: var(--catalogue-col-price);
-  height: var(--record-price-height);
+  height: auto;
   font-size: var(--font-size-xs);
   color: var(--color-text-primary);
+}
+
+.book-record-heading,
+.book-record-meta,
+.book-record-price {
+  padding-top: 4rem !important;
 }
 
 .catalogue-empty {
@@ -678,24 +739,58 @@
   }
 
   .book-record {
-    flex-direction: column;
-    gap: var(--space-14);
+    display: grid;
+    grid-template-columns: minmax(0, 6.25rem) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-16);
     padding-block: var(--space-24);
   }
 
+  .book-record-content {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-12);
+    min-width: 0;
+  }
+
   .book-record-heading {
+    display: flex;
     width: 100%;
+    padding-top: 0 !important;
   }
 
-  .book-record-meta,
-  .book-record-price {
-    width: 100%;
-    padding-inline: var(--space-36);
+  .book-record-text {
+    padding-top: 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .book-record-cover {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    width: 6.25rem !important;
+    height: auto !important;
+    max-width: 6.25rem;
+  }
+
+  .book-record-meta {
+    align-self: start;
+    width: auto;
+    padding-top: 0 !important;
+    padding-inline: 0;
+    text-align: left;
   }
 
   .book-record-price {
+    align-self: start;
+    width: auto;
+    justify-content: flex-start;
     height: auto;
     min-height: var(--space-32);
+    padding: 0 !important;
   }
 
   .cafe-banner {
